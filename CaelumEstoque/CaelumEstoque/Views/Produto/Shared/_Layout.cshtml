@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_Layout</title>
+    <link rel=" stylesheet" href="~/Content/Css/bootstrap.css" />
+    <link rel=" stylesheet" href="~/Content/Css/Site.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <!-- código do menu -->
+            <ul class="nav nav-pills pull-right">
+                <li>@Html.ActionLink("Produtos", "Index", "Produto")</li>
+                <li>@Html.ActionLink("Categorias", "Index", "Categorias")</li>
+            </ul>
+            <h3 class="text-muted">Caelum Estoque</h3>
+        </div>
+        <div id="conteudo">
+            <!-- Aqui fica o código da tabela de produtos -->
+           @RenderBody() <!--No ponto em que queremos colocar o conteúdo da view, precisamos chamar o método RenderBody()-->
+        </div>
+    </div>    
+</body>
+</html>

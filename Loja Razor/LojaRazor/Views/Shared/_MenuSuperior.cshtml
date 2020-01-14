@@ -1,0 +1,36 @@
+﻿@using LojaRazor.Internacionalizacao
+
+<!-- Conteúdo fica aqui! -->
+<div class="navbar navbar-fixed-top">
+    <!--vamos colocar mais uma div que terá as classes navbar e navbar-fixed-top indicando que teremos mais um menu fixo no canto superior da página:-->
+    <div class="navbar-inner">
+        <!-- Aqui fica o conteúdo do menu -->
+        <!--ActionLink que recebe, além das informações da action e do controller, os parâmetros da rota e os atributos que queremos colocar no html-->
+        @Html.ActionLink("Loja Razor", "Index", "Home", null, new { @class = "brand" }) <!--Quando queremos usar uma palavra reservada como uma variável, precisamos do AROBAR:-->
+        <ul class="nav">
+            <!--amos também colocar links para as páginas de contato e de informações sobre a empresa. Os itens do menu do twitter bootstrap devem ser colocados dentro de um ul do html com a classe nav:-->
+            <li>@Html.ActionLink(LojaRazor.Internacionalizacao.Mensagens.Sobre,"About", "Home")</li>
+            <li>@Html.ActionLink(Mensagens.Contato, "Contato", "nome")</li>
+        </ul>
+        <p class="navbar-text pull-right">
+
+            <!--Para verificar se existe um usuário logado no sistema, precisamos acessar a sessão do servidor e fazemos isso através da variável Session que é disponibilizada automaticamente na view.-->
+            <!--Se um usuário não estiver logado, o valor de Session["usuarioLogado"] será null-->
+            @if (Session["usuariologado"] != null)
+            {   <!-- Conteúdo para usuário logado -->
+                @Mensagens.BemVindo
+                <!--O nome do usuário logado atualmente dentro do sistema fica em uma chave chamada usuarioLogado dentro de Session, então para pegar o nome do usuário atual, -->
+                @Session["usuariologado"]
+                @Html.ActionLink(Mensagens.Logout, "Logout", "Autenticacao")
+
+            } else  {
+                 <!-- conteúdo para usuário deslogado -->
+                @Mensagens.OlaVisitante
+                @Html.ActionLink(Mensagens.Login, "Index", "Autenticacao")
+                @Mensagens.Ou
+                @Html.ActionLink(Mensagens.Cadastre, "Form", "Usuarios")
+
+            }
+        </p>
+    </div>
+</div>

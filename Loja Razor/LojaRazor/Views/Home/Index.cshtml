@@ -1,0 +1,20 @@
+﻿
+<!-- conteúdo -->
+<div class="hero-unit">
+<!-- Código da oferta -->
+    <h2> Queima de estoque</h2>
+      <p>Promoção na seção de monitores</p>
+         </div>
+            <div class="row-fluid">
+              <!-- produtos aqui -->
+              <!--queremos mostrar os 3 principais produtos em oferta, eles encontram numa lista chamada Produtos na ViewBag. -->
+               @foreach (var produto in ViewBag.Produtos)
+               {
+                  <div class="span4"> <!--Agora cada produto ficará dentro de um div de classe span4. Para iterarmos na lista de produtos, utilizaremos novamente o foreach:-->
+                     <h2>@produto.Nome</h2>
+                     <p>@produto.Descricao</p>
+                     <p>@produto.Preco</p>
+                   </div>
+               }
+         </div>
+                                

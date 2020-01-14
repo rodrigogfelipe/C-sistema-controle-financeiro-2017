@@ -1,0 +1,36 @@
+﻿
+        <!--precisamos inicialmente de um formulário que receba os dados necessários para se criar um novo produto.-->
+        <form action="/Produto/Adiciona" method="post">
+            @Html.AntiForgeryToken()
+            @Html.ValidationMessage("produto.InformaticaComPrecoInvalido") <!--Agora que sabemos como verificar os erros de validação, vamos exibir as mensagens geradas. Para isso, 
+             utilizaremos a classe HtmlHelper.Agora que sabemos como verificar os erros de validação, vamos exibir as mensagens geradas. Para isso, utilizaremos a classe HtmlHelper.-->
+
+            <label for="nome">Nome:</label>
+            <input id="nome" name="produto.Nome" value="@ViewBag.Produto.Nome" class="form-control"/>
+            <!--por exemplo, se quisermos que o atributo Nome do produto seja preenchido automaticamente, devemos criar um
+            formulário HTML que tenha um campo chamado produto.Nome: <input name="produto.Nome" />.-->
+            @Html.ValidationMessage("produto.Nome")
+
+            <label for="preco">Preco:</label>
+            <input id="preco" name="produto.Preco" value="@ViewBag.Produto.Preco" class="form-control" />
+
+            <label for="quantidade">Quantidade:</label>
+            <input id="quantidade" name="produto.Quantidade" value="@ViewBag.Produto.Quantidade" class="form-control" />
+
+            <label for="descricao">Descricao:</label>
+            <input id="descricao" name="produto.Descricao" value="@ViewBag.Produto.Descricao" class="form-control" />
+
+            <label for="categoria">Categoria:</label>
+            <select id="categoria" name="produto.CategoriaId" class="form-control">
+                <!--select para exibir os nomes das categorias existentes e enviar o valor do Id selecionado para o servidor-->
+                @foreach (var categoria in ViewBag.Categorias) //dentro do @foreach, comparar cada categoria com a categoria do produto da ViewBag. Se as categorias forem iguais, marcaremos a opção como selecionada.
+                {
+
+                    <option value="@categoria.Id" selected="@categoria.Id.Equals(ViewBag.Produto.CategoriaId)">@categoria.Nome</option>
+                 }
+
+
+            </select>
+            <input type="submit" value="Cadastrar" />
+        </form>
+   

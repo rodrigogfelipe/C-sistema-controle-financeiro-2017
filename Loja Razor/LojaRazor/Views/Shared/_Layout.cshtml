@@ -1,0 +1,38 @@
+﻿<!--Dentro do _Layout.cshtml colocamos o código comum a todas as páginas e marcamos o lugar em que queremos colocar o código da view do controller-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Na tag link, precisamos informar qual é o endereço que o navegador precisa acessar para baixar o estilo. Então precisamos fornecer o endereço de um
+    arquivo que está na pasta Content do projeto-->
+    <!-- Importamos o bootstrap aqui -->
+    @Styles.Render("~/bundles/estilos")
+
+    <!--importaremos também mais um css adicional desse curso:-->
+    <link href="~/Content/Style.css" rel="stylesheet" />
+</head>
+<body>
+    @Html.Partial("_MenuSuperior") <!-- método Partial procura uma view dentro da pasta ~/Views/Shared com o mesmo nome do argumento que foi passado. O conteúdo dessa 
+                                       view é colocado no lugar da chamada para o Partial..-->
+
+    <!--Dentro do body, o conteúdo da página e o menu lateral devem ficar dentro de uma div com a classe 'container-fluid'-->
+    <div class="container-fluid">
+        <!-- Menu lateral e ofertas -->
+        <div class="row-fluid">
+            <!--row-fluid como uma linha de uma tabela com que contem 12 colunas. Dessas 12 colunas, queremos utilizar 3 para o menu e 9 para o conteúdo principal-->
+            <div class="span3">
+                <!-- menu -->
+                @Html.Action("Index", "Menu") <!--Esse método faz com que o asp.net mvc execute a ação do controller e gere o html da view. O html gerado é colocado no lugar em que o método Action foi chamado:-->
+               
+            </div>
+            <div class="span9">
+                @RenderBody()
+
+            </div>
+        </div>
+    </div>
+    <!-- Importa o código da seção Scripts -->
+    @RenderSection("Scripts", false) <!--RenderSection. Com esse código estamos definindo uma seção obrigatória chamada Scripts, porém nem toda view precisa importar scripts adicionais, então precisamos marcar a seção como opcional:-->
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿<!--Com isso estamos definindo qual é o tipo da variável Model utilizada na View. Views em que definimos o tipo de Model são chamadas de Views Fortemente Tipadas. 
+Quando temos uma view fortemente tipada, o próprio Visual Studio gera erros quando tentamos acessar algum atributo inválido do modelo.-->
+@model LojaRazor.Models.Usuario
+
+<!-- método BeginForm. O primeiro argumento do BeginForm é o nome da action para onde queremos enviar o formulário, o segundo é o nome do controller e o terceiro é o
+    método de envio do formulário.-->
+@using(Html.BeginForm("Cadastra", "Usuarios", FormMethod.Post))
+{ 
+    <fieldset>
+        <legend>Dados Pessoais</legend>
+
+        <!--Para mostrar os erros de validação, podemos utilizar o método ValidationMessage do HtmlHelper -->
+        @Html.LabelFor(usuario => usuario.Nome, "Nome:") <!--Com isso, caso o usuário envie um formulário com dados inválidos, o Razor mostrará as mensagens de 
+                                                        validação para o campo nome-->
+
+        @Html.TextBoxFor(usuario => usuario.Nome) <!--Para gerarmos o campo que receberá o nome do novo usuário, utilizamos o método TextBoxFor passando um lambda que 
+                                                      recebe um argumento do tipo Usuario (tipo da view) e devolve qual é a propriedade que queremos utilizar para gerar o campo:-->
+
+        @Html.ValidationMessageFor(usuario => usuario.Nome) <!--ValidationMessage para mostrar os erros de validação dos outros campos do formulário.-->
+
+        @Html.LabelFor(u => u.Email, "Email:")
+        @Html.TextBoxFor(u => u.Email)
+        @Html.ValidationMessageFor(u => u.Email)
+
+        @Html.LabelFor(u => u.Senha, "Senha:")
+        @Html.PasswordFor(u => u.Senha) <!--E para a senha, não queremos mostrar o valor digitado pelo usuário, então utilizaremos o método PasswordFor:-->
+        @Html.ValidationMessageFor(u => u.Senha)
+
+        @Html.LabelFor(u => u.DataDeNascimento, "DataDeNascimento:")
+        @Html.TextBoxFor(u => u.DataDeNascimento)
+        @Html.ValidationMessageFor(u => u.DataDeNascimento)
+
+</fieldset>
+
+    <fieldset>
+        <legend>Dados de Entrega</legend>
+
+        @Html.LabelFor(u => u.Endereco, "Endereço:")
+        @Html.TextBoxFor(u => u.Endereco)
+        @Html.ValidationMessageFor(u => u.Endereco)
+
+        @Html.LabelFor(u => u.Complemento, "Complemento:")
+        @Html.TextBoxFor(u => u.Complemento)
+        @Html.ValidationMessageFor(u => u.Complemento)
+       
+        @Html.LabelFor(u => u.CEP, "CEP:")
+        @Html.TextBoxFor(u => u.CEP)
+        @Html.ValidationMessageFor(u => u.CEP)
+
+        @Html.LabelFor(u => u.Observacoes, "Observacoes:")
+        @Html.TextAreaFor(u => u.Observacoes)
+        @Html.ValidationMessageFor(u => u.Observacoes)
+</fieldset>
+<div>
+    @Html.CheckBoxFor(u => u.RecebePromocoes) <!--CheckBoxFor passando o lambda que devolve qual a propriedade do usuário queremos preencher.-->
+    Desejo receber informações sobre promoções
+</div>
+
+<input type="submit" value="Cadastrar" class="btn btn-large" />
+
+}
+       
+</form>

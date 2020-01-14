@@ -1,0 +1,56 @@
+﻿<!--não é suficiente para o Asp.Net MVC saber o tipo da variável Model, no início do código da view, precisamos indicar qual é o tipo da variável Model através do 
+    comando MODEL -->
+@model IList<CaelumEstoque.Models.Produto> 
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Queremos exibir o id, o nome e a quantidade dos produtos de nossa lista dentro de uma tabela, ou seja, fazer algo equivalente ao código abaixo:-->
+
+                @foreach(var produto in Model) { <!--A variável passada como argumento do método View pode ser acessada pela view através de uma variável chamada
+                                                Model, essa variável é considerada pelo Asp.Net MVC como a variável principal da view.-->
+
+                    <tr>
+                        <td>@produto.Id</td>
+                        <td>
+                            @Html.RouteLink(produto.Nome, "VisualizaProduto", new { id= produto.Id }) <!--No link de visualização, precisamos também passar quais são as informações que devem ser enviadas para o servidor. -->
+                        </td>
+                        <td id="quantidade@(produto.Id)"> <!--Dentro do atualiza, podemos, por exemplo, mostrar uma caixa de mensagens se a requisição foi bem sucedida:-->
+                            @produto.Quantidade
+                        </td> 
+                        <td>
+                            <a href="#" onclick="decrementa(@produto.Id);">Decrementar</a> <!--Para executarmos uma função no clique do link precisamos utilizar o 
+                             atributo onclick dentro da declaração da tag a colocando a chamada para o decrementa com o id do produto correto. toda vez que o usuário 
+                             clicar em um link, o navegador enviará uma requisição ajax para o servidor para decrementar a quantidade de um produto cadastrado-->
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+<script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script> <!--Para podermos utilizar a biblioteca jquery, precisamos inicialmente importá-la dentro do cshtml da lista de produtos-->
+
+<script type="text/javascript"> //<!--Agora que importamos a biblioteca jquery, precisamos declarar um bloco de código javascript que realmente fará a requisição ajax-- >
+     // o script fica aqui
+    function decrementa(produtoId) { //Com esse código, faremos uma requisição ajax para decrementar a quantidade do produto que tem id igual a 1. Para podermos
+        //reutilizá - lo para os outros produtos cadastrados, vamos isolá- lo dentro de uma função javascript que recebe o id do produto que será decrementado.../
+        
+        var url = "@Url.Action("DecrementaQtd", "Produto")"; //Para gerarmos uma url com o UrlHelper, utilizamos o método Action informando qual é a action e qual é o controller que queremos acessar:
+        
+        $.post(url, { id: produtoId }, atualiza); //Nessas funções, o primeiro argumento que colocamos é a url para onde queremos enviar a requisição e o segundo representa os parâmetros que serão enviados para o servidor:..../
+    }
+
+    function atualiza(resposta) { //Para podermos utilizar a resposta do servidor dentro da função atualiza, precisamos apenas colocar um argumento na declaração da função:
+        // usa a resposta devolvida
+        $("#quantidade" + resposta.Id).html(resposta.Quantidade); // primeiro passo é buscarmos o elemento que queremos atualizar dentro do html da página.
+        //Para isso precisamos utilizar a função $ definida pelo jquery passando o id do elemento que queremos buscar com o prefixo #
+
+    }
+
+ </script>   

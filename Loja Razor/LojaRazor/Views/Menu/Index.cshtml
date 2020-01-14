@@ -1,0 +1,24 @@
+﻿<!--
+
+@{ 
+    Layout = null; <!--O valor null nao aceita layout nessa pagina-->
+}
+
+<div class="sidebar-nav well">
+    <!--sidebar-nav, além disso, para esse menu ficar com um fundo em detaque, utilizaremos a classe well, também do bootstrap-->
+    <ul>
+        <!--tag ul, dentro dessa tag queremos mostrar os departamentos da loja e as categorias de cada departamento. Para iterarmos na lista de departamentos, utilizaremos o foreach:-->
+        @foreach (var departamento in ViewBag.Departamentos)
+        {
+            <li class="nav-header">@departamento.Nome</li> <!--Para indicarmos que os nomes de departamentos devem ficar em destaque, vamos utilizar a classe nav-header do bootstrap:-->
+
+                        <!--Para cada departamento, precisamos mostrar sua lista de categorias:-->
+                        <!--Como o foreach interno já está dentro de um bloco de código, não podemos colocar o caractere-->
+            foreach (var categoria in departamento.Categorias)
+            {
+                <li>@categoria.Nome</li>
+
+            }
+        }
+    </ul>
+</div>
